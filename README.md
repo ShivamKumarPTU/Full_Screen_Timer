@@ -40,7 +40,7 @@ With **Pause** and **Cancel** controls, you stay in charge of your time — whet
 Clone this repository and run it in **Android Studio**:  
 
 ```bash
-git clone https://github.com/your-username/full-screen-timer.git
+git clone https://github.com/ShivamKumarPTU/Full_Screen_Timer.git
 ```
 
 1. Open the project in **Android Studio**.  
