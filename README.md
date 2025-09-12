@@ -42,7 +42,11 @@ Clone this repository and run it in **Android Studio**:
 ```bash
 git clone https://github.com/ShivamKumarPTU/Full_Screen_Timer.git
 ```
-[![Download APK](https://img.shields.io/badge/Download-APK-green)](https://github.com/ShivamKumarPTU/Full_Screen_Timer/releases/download/v1.1/app-release.apk)
+Download Apk (version :-v1.1)
+```bash
+https://github.com/ShivamKumarPTU/Full_Screen_Timer/releases/download/v1.1/app-release.apk
+```
+
 
 
 1. Open the project in **Android Studio**.  
