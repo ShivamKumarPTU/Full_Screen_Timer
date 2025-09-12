@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".MainActivity">
+
+    <!-- Heading -->
+    <TextView
+        android:id="@+id/Heading1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Zen Temple"
+        android:textColor="#FFFFFF"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp"/>
+
+    <!-- Timer Picker -->
+
+    <!-- Start Button -->
+    <nl.joery.timerangepicker.TimeRangePicker
+        android:id="@+id/picker"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Heading1"
+        app:trp_clockLabelSize="14sp"
+        app:trp_endTime="3:00"
+        app:trp_endTimeMinutes="0"
+        app:trp_sliderColor="#FFFFFF"
+        app:trp_sliderRangeColor="#2962FF"
+        app:trp_sliderWidth="12dp"
+        app:trp_startTime="0:00"
+        app:trp_startTimeMinutes="0"
+        app:trp_stepTimeMinutes="15"
+        app:trp_thumbColor="#9C27B0"
+        app:trp_thumbIconEnd="@drawable/alarm_alert_bell_svgrepo_com"
+        app:trp_thumbIconStart="@drawable/alarm_clock_svgrepo_com" />
+
+    <Button
+        android:id="@+id/startButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="96dp"
+        android:backgroundTint="#2962FF"
+        android:text="Start"
+        android:textColor="#FAFAFA"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
