@@ -1,3 +1,11 @@
+<p align="center">
+  <img src="banner.png" alt="Full Screen Timer Banner" width="800"/>
+</p>
+
+# ⏱️ Full Screen Timer  
+### Focus better with a clean, distraction-free timer  
+
+
 # ⏱️ Full Screen Timer  
 ### Focus better with a clean, distraction-free timer  
 
