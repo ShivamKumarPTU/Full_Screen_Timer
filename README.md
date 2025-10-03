@@ -31,7 +31,7 @@ With **Pause** and **Cancel** controls, you stay in charge of your time — whet
 
 | Time Picker | Full Screen Timer |
 |-------------|-------------------|
-| ![Time Picker](./updated.png) | ![Full Screen Timer](./Screenshot_20250912_232810.png) |
+| ![Time Picker](./Screenshot_updated.png) | ![Full Screen Timer](./Screenshot_20250912_232810.png) |
 
 ---
 
