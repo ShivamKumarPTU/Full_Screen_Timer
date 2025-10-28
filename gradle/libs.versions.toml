@@ -1,5 +1,7 @@
+
 [versions]
 agp = "8.13.0"
+# Merged and kept the first definition of kotlin
 kotlin = "2.2.21-RC2"
 core-ktx = "1.12.0"
 hilt = "2.48"
@@ -16,14 +18,14 @@ activity-version = "1.8.0"
 ksp = "2.2.21-RC2-2.0.4"
 work-runtime-ktx = "2.8.1"
 androidx-activity = "1.11.0"
-
-# REMOVE THESE INVALID VERSIONS:
-# firebase-firestore-ktx = "26.0.2"  # THIS DOESN'T EXIST
-# firebase-database-ktx = "22.0.1"   # THIS DOESN'T EXIST
-# firebase-auth-ktx = "24.0.1"       # THIS DOESN'T EXIST
+# Versions from the second, duplicate block
+junit = "4.13.2"
+junitVersion = "1.1.5"
+espressoCore = "3.5.1"
+# firebaseSessions is a duplicate of firebase-sessions, removed for clarity
 
 [libraries]
-# AndroidX
+# AndroidX - Merged from both sections
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 androidx-activity = { group = "androidx.activity", name = "activity-ktx", version.ref = "activity" }
@@ -34,12 +36,15 @@ material = { group = "com.google.android.material", name = "material", version.r
 androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation" }
 androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }
 
-# Firebase - USE BOM ONLY, NO INDIVIDUAL VERSIONS
+# Firebase - USE BOM. KTX libraries are now main modules without the -ktx suffix.
+# Corrected to use the main modules. The versions will be managed by the BOM.
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
-firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx" }
-firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx" }
-firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx" }
-firebase-sessions = { group = "com.google.firebase", name = "firebase-sessions",version="1.2.2" }
+# Corrected library names by removing "-ktx"
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore" }
+firebase-database = { group = "com.google.firebase", name = "firebase-database" }
+# Corrected firebase-sessions to not have a hardcoded version, so it can use the BOM if available, or its own version ref.
+firebase-sessions = { group = "com.google.firebase", name = "firebase-sessions", version.ref = "firebase-sessions" }
 
 # Google Services
 google-play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "play-services-auth" }
@@ -50,11 +55,12 @@ animated-vector-drawable = { group = "androidx.vectordrawable", name = "vectordr
 # WorkManager
 androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "work-runtime-ktx" }
 
-# Testing
-junit = { group = "junit", name = "junit", version = "4.13.2" }
-androidx-junit = { group = "androidx.test.ext", name = "junit", version = "1.1.5" }
-androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version = "3.5.1" }
-activity = { group = "androidx.activity", name = "activity", version.ref = "androidx-activity" }
+# Testing - Merged from both sections
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+# The 'activity' library was defined twice, this one is the correct one for testing if needed.
+activity-test = { group = "androidx.activity", name = "activity", version.ref = "androidx-activity" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

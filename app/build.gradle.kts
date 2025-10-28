@@ -10,11 +10,13 @@ plugins {
 
 android {
     namespace = "com.example.monktemple"
-    compileSdk = 36
+    // Using compileSdk 34 as it's a stable choice and matches targetSdk.
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.monktemple"
-        minSdk = 24  // Changed from 31 to 24 for broader compatibility
+        // Choosing minSdk 24 for broader compatibility as intended in your latest changes.
+        minSdk = 24
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -34,6 +36,7 @@ android {
     }
 
     compileOptions {
+        // Using Java 1.8 as it is the standard for modern Android development.
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -59,11 +62,12 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
 
-    // Firebase - USE BOM ONLY (no individual versions)
+    // Firebase - Using the complete and correct block from your latest changes
     implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.auth.ktx)
-    implementation(libs.firebase.firestore.ktx)
-    implementation(libs.firebase.database.ktx)
+    // The following names assume you have corrected your libs.versions.toml to remove "-ktx"
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.database)
     implementation(libs.firebase.sessions)
 
     // Google Sign-In
@@ -74,22 +78,21 @@ dependencies {
 
     // Animated Vector Drawable & Biometrics
     implementation(libs.animated.vector.drawable)
-    implementation("androidx.biometric:biometric:1.1.0") // Use stable version
+    implementation("androidx.biometric:biometric:1.1.0") // Using stable version
 
     // Circle ImageView & MPAndroidChart
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
-    implementation(libs.activity)
 
     // Room Database
-    val room_version = "2.8.3" // Stable version
+    val room_version = "2.6.1" // Using a known stable version
     implementation("androidx.room:room-runtime:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
     ksp("androidx.room:room-compiler:$room_version")
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.10.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.8.0")
 
     // Swipe Refresh Layout
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
@@ -98,11 +101,12 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.1")
 
     // Hilt for Dependency Injection
-    implementation("com.google.dagger:hilt-android:2.57.2")
-    ksp("com.google.dagger:hilt-compiler:2.57.2")
+    implementation("com.google.dagger:hilt-android:2.51.1") // Using a stable version
+    ksp("com.google.dagger:hilt-compiler:2.51.1")
+
     // For Hilt and WorkManager Integration
-    implementation("androidx.hilt:hilt-work:1.3.0")
-    ksp("androidx.hilt:hilt-compiler:1.3.0")
+    implementation("androidx.hilt:hilt-work:1.2.0")
+    ksp("androidx.hilt:hilt-compiler:1.2.0")
 
     // WorkManager for background tasks
     implementation(libs.androidx.work.runtime.ktx)
