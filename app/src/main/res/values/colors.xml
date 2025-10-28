@@ -2,4 +2,30 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="zen_primary">#4CAF50</color>
+    <color name="transparent">#00000000</color>
+    <color name="gray_high_01">#212529</color>
+    <color name="gray_high_02">#343a40</color>
+    <color name="gray_mid_01">#495057</color>
+    <color name="gray_mid_02">#6c757d</color>
+    <color name="gray_mid_03">#adb5bd</color>
+    <color name="gray_low_01">#ced4da</color>
+    <color name="gray_low_02">#dee2e6</color>
+    <color name="gray_low_03">#e9ecef</color>
+    <color name="gray_low_04">#f8f9fa</color>
+    <color name="blue">#0366d6</color>
+    <color name="dark_background">#121212</color>
+    <color name="dark_card_background">#1E1E1E</color>
+    <color name="dark_card_stroke">#2A2A2A</color>
+    <color name="accent">#4DB6AC</color> <!-- soft teal -->
+    <color name="light_gray">#B0B0B0</color>
+    <color name="pinkish">#7C50EB</color>
+    <color name="blueish">#88B456</color>
+    <color name="skyish">#3F97ED</color>
+    <color name="splash_bg_color">#FFD54F</color>
+    <color name="splash_background">#FFD54F</color>
+    <color name="primary">#FFD54F</color>
+    <color name="primary_dark">#FFC107</color>
+
+
 </resources>

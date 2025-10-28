@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- When the button's state is "selected" -->
+    <item android:state_selected="true" android:drawable="@drawable/selector_shape" /> <!-- Use the pinkish shape -->
+
+    <!-- The default, unselected state -->
+    <item android:drawable="@drawable/selector_default" /> <!-- Use the transparent shape -->
+</selector>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+    android:background="@drawable/zen_background"
+    android:gravity="bottom|center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="16dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+<LinearLayout
+    android:id="@+id/nav_header"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
+
+
+    <!-- Editable Profile Image -->
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/nav_header_icon"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/_4"
+        app:civ_border_color="@android:color/white"
+        app:civ_border_width="2dp" />
+    <!-- Edit Icon -->
+    <ImageView
+        android:id="@+id/edit_name_icon1"
+        android:layout_width="16dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:contentDescription="Edit Name"
+        android:focusable="true"
+        android:padding="2dp"
+        android:src="@drawable/edit_svgrepo_com"
+        app:tint="@color/white" />
+</LinearLayout>
+    <!-- Container for User Name and Edit Icon -->
+    <LinearLayout
+        android:id="@+id/edit_name_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical">
+
+        <!-- User Name TextView -->
+        <TextView
+            android:id="@+id/nav_header_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Monk Temple"
+            android:layout_gravity="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- Edit Icon -->
+        <ImageView
+            android:id="@+id/edit_name_icon"
+            android:layout_width="16dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="Edit Name"
+            android:focusable="true"
+            android:padding="2dp"
+            android:src="@drawable/edit_svgrepo_com"
+            app:tint="@color/white" />
+
+    </LinearLayout>
+
+    <!-- Optional: User Email or Tagline -->
+    <TextView
+        android:id="@+id/nav_header_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Find your inner peace"
+        android:textColor="@android:color/white"
+        android:textSize="14sp" />
+
+</LinearLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Verify Your Identity"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="32dp" />
+
+    <Button
+        android:id="@+id/biometricAuth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Use Fingerprint"
+        android:layout_marginBottom="16dp"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/faceAuth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Use Face Unlock"
+        android:layout_marginBottom="16dp"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/passwordAuth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Use Password"
+        android:layout_marginBottom="16dp"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/pinAuth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Use PIN"
+        android:layout_marginBottom="16dp"
+        android:visibility="gone" />
+
+</LinearLayout>

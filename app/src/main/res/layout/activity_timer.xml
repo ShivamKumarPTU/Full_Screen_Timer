@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".Timer">
+
+    <!-- 🪷 Main Content -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/zen_background">
+
+        <!-- ☰ Floating Hamburger Icon -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floating_hamburger"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="Menu"
+            android:elevation="4dp"
+            android:src="@drawable/hamburger_md_svgrepo_com"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
+
+        <!-- 🕊️ Title -->
+        <TextView
+            android:id="@+id/heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:fontFamily="sans-serif-light"
+            android:letterSpacing="0.05"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="Set Your Focus Session Time"
+            android:textColor="@color/white"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Goal Input Field -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/goalInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="24dp"
+            app:boxBackgroundColor="#3A3A4A"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintTop_toBottomOf="@id/heading">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/goalInput"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:hint="Set Your Focus Session name"
+                android:imeOptions="actionDone"
+                android:inputType="textAutoCorrect"
+                android:letterSpacing="0.08"
+                android:maxLines="1"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+
+                android:textColorHint="@color/gray_mid_03"
+                android:textSize="18sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- ⏰ Time Picker (CONSTRAINTS UPDATED) -->
+        <TimePicker
+            android:id="@+id/timePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:timePickerMode="spinner"
+            android:background="@drawable/zen_background"
+            app:layout_constraintTop_toBottomOf="@id/goalInputLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/startButton"
+            app:layout_constraintVertical_bias="0.3" />
+
+        <!-- 🧘‍♀️ Start Button -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/startButton"
+            android:layout_width="220dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="80dp"
+            android:background="@drawable/zen_button_background"
+            android:fontFamily="sans-serif-medium"
+            android:letterSpacing="0.08"
+            android:text="Start"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- 🌿 Navigation Drawer -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@drawable/zen_background"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/nav_menu"
+        app:itemTextAppearance="@style/NavDrawerText"
+        app:itemIconTint="@color/gray_low_01"
+        app:elevation="16dp" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 pluginManagement {
     repositories {
         google {
@@ -7,16 +9,20 @@ pluginManagement {
                 includeGroupByRegex("androidx.*")
             }
         }
+        maven {
+            url = uri("https://jitpack.io")
+        }
         mavenCentral()
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
-        maven{
+        maven {
             url = uri("https://jitpack.io")
         }
     }
@@ -24,4 +30,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "MonkTemple"
 include(":app")
- 

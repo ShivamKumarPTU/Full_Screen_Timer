@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".Statistics">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Header with Back Icon and Centered Title -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <ImageButton
+                android:id="@+id/back_arrow_icon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:clickable="true"
+                android:focusable="true"
+                android:scaleType="fitEnd"
+                android:src="@drawable/backwardicon"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/HeadingText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Timer Analytics"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Day/Week/Month Toggle -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/dayList"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        app:cardBackgroundColor="#2C2C2E"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="8dp"> <!-- Example color, use your cardbg color -->
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <androidx.appcompat.widget.AppCompatButton
+                                android:id="@+id/dayButton"
+                                style="?android:attr/borderlessButtonStyle"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/selector_button_bg"
+                                android:text="Day"
+                                android:textAllCaps="false"
+                                android:textColor="@color/white" />
+
+                            <androidx.appcompat.widget.AppCompatButton
+                                android:id="@+id/weekButton"
+                                style="?android:attr/borderlessButtonStyle"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/selector_button_bg"
+                                android:text="Week"
+                                android:textAllCaps="false"
+                                android:textColor="@color/white" />
+
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Analytics Cards -->
+                    <LinearLayout
+                        android:id="@+id/linearLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/analytics1"
+                            android:layout_width="0dp"
+                            android:layout_height="100dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="#2C2C2E"
+                            app:cardCornerRadius="8dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="12dp"
+                                    android:layout_marginTop="8dp"
+                                    android:clickable="false"
+                                    android:text="Sessions"
+                                    android:textColor="@color/gray_mid_03"
+                                    android:textSize="13sp"
+                                    android:textStyle="bold" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/noOfSession"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="12dp"
+                                    android:layout_marginTop="2dp"
+                                    android:clickable="false"
+                                    android:hint="12"
+                                    android:inputType="number"
+                                    android:textColor="@color/pinkish"
+                                    android:textColorHint="@color/pinkish"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="12dp"
+                                    android:layout_marginTop="2dp"
+                                    android:layout_marginBottom="8dp"
+                                    android:text="Completed"
+                                    android:textColor="@color/gray_mid_03"
+                                    android:textSize="13sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/analytics2"
+                            android:layout_width="0dp"
+                            android:layout_height="100dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="#2C2C2E"
+                            app:cardCornerRadius="8dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="12dp"
+                                    android:layout_marginTop="8dp"
+                                    android:clickable="false"
+                                    android:text="Focus"
+                                    android:textColor="@color/gray_mid_03"
+                                    android:textSize="13sp"
+                                    android:textStyle="bold" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/focusTIme"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="12dp"
+                                    android:layout_marginTop="2dp"
+                                    android:clickable="false"
+                                    android:hint="4h 32m"
+                                    android:inputType="datetime"
+                                    android:textColor="#88B456"
+                                    android:textColorHint="#88B456"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="12dp"
+                                    android:layout_marginTop="2dp"
+                                    android:layout_marginBottom="8dp"
+                                    android:text="Total Today"
+                                    android:textColor="@color/gray_mid_03"
+                                    android:textSize="13sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/analytics3"
+                            android:layout_width="0dp"
+                            android:layout_height="100dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="#2C2C2E"
+                            app:cardCornerRadius="8dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="12dp"
+                                    android:layout_marginTop="8dp"
+                                    android:clickable="false"
+                                    android:text="Average"
+                                    android:textColor="@color/gray_mid_03"
+                                    android:textSize="13sp"
+                                    android:textStyle="bold" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/sessionTime"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="12dp"
+                                    android:layout_marginTop="2dp"
+                                    android:clickable="false"
+                                    android:hint="22m"
+                                    android:inputType="datetime"
+                                    android:textColor="#3F97ED"
+                                    android:textColorHint="#3F97ED"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="12dp"
+                                    android:layout_marginTop="2dp"
+                                    android:layout_marginBottom="8dp"
+                                    android:text="Per Session"
+                                    android:textColor="@color/gray_mid_03"
+                                    android:textSize="13sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+                    </LinearLayout>
+
+                    <!-- Graph View Card -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/graphView"
+                        android:layout_width="match_parent"
+                        android:layout_height="350dp"
+                        android:layout_marginTop="24dp"
+                        app:cardBackgroundColor="#2C2C2E"
+                        app:cardCornerRadius="8dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="12dp"
+                                android:layout_marginTop="12dp"
+                                android:text="Focus Time Distribution"
+                                android:textColor="@color/white"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+
+                            <com.github.mikephil.charting.charts.BarChart
+                                android:id="@+id/barChart"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="12dp" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Insight View Card -->
+                    <!-- Insight View Card -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/insightView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        app:cardBackgroundColor="#2C2C2E"
+                        app:cardCornerRadius="8dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="16dp"
+                                android:text="Today's Insight"
+                                android:textColor="@color/white"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+
+                            <!-- Insight Item 1: Most Productive -->
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="12dp">
+
+                                <ImageView
+                                    android:id="@+id/dot_productive"
+                                    android:layout_width="8dp"
+                                    android:layout_height="8dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginEnd="12dp"
+                                    android:src="@drawable/dotbg3" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_toEndOf="@id/dot_productive"
+                                    android:text="Most productive:"
+                                    android:textColor="@color/gray_mid_03"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:id="@+id/mostProductiveTime"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:text="10:00 - 12:00"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold" />
+                            </RelativeLayout>
+
+                            <!-- Insight Item 2: Longest Session -->
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="12dp">
+
+                                <ImageView
+                                    android:id="@+id/dot_longest"
+                                    android:layout_width="8dp"
+                                    android:layout_height="8dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginEnd="12dp"
+                                    android:src="@drawable/dotbg2" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_toEndOf="@id/dot_longest"
+                                    android:text="Longest session:"
+                                    android:textColor="@color/gray_mid_03"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:id="@+id/longestSessionValue"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:text="45 minutes"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold" />
+                            </RelativeLayout>
+
+                            <!-- Insight Item 3: Completion Rate -->
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <ImageView
+                                    android:id="@+id/dot_completion"
+                                    android:layout_width="8dp"
+                                    android:layout_height="8dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginEnd="12dp"
+                                    android:src="@drawable/dotbg1" /> <!-- Your blue dot -->
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_toEndOf="@id/dot_completion"
+                                    android:text="Completion rate:"
+                                    android:textColor="@color/gray_mid_03"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:id="@+id/completionRateValue"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:text="85%"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold" />
+                            </RelativeLayout>
+
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

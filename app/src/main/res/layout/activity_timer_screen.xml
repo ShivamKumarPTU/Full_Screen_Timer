@@ -11,44 +11,73 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="640dp"
-        android:layout_height="161dp"
-        android:layout_marginBottom="72dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
         android:gravity="center"
         android:text="00:12:34"
         android:textColor="#FFFFFF"
         android:textSize="144sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
-        app:layout_constraintTop_toTopOf="@+id/guideline2"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="178dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/goalInputTimerScreenText" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/goalInputTimerScreenText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+       android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:letterSpacing="0.08"
+        android:background="#3A3A4A"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button"
-        android:layout_width="144dp"
-        android:layout_height="72dp"
+        android:layout_width="220dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         android:backgroundTint="#2962FF"
         android:text="Pause"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="160dp"
-        tools:layout_editor_absoluteY="298dp" />
+
+        app:layout_constraintEnd_toStartOf="@+id/button2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="144dp"
-        android:layout_height="72dp"
+        android:layout_width="220dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
         android:backgroundTint="#474646"
         android:text="Cancel"
         android:textColor="#FFFFFF"
-        android:textColorLink="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="632dp"
-        tools:layout_editor_absoluteY="348dp" />
 
-    </androidx.constraintlayout.widget.Guideline>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

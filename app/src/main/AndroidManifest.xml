@@ -1,6 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <!-- Grouped permissions for clarity -->
+    <!-- For Biometric Authentication -->
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" /> <!-- For device vibration (haptic feedback) -->
+    <uses-permission android:name="android.permission.VIBRATE" /> <!-- For showing notifications on modern Android -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" /> <!-- For network access -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--
+     FIX: Modern, granular media permissions for Android 13+.
+     You MUST request these at runtime in your code.
+    -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" /> <!-- For Android 12 and below - READ_EXTERNAL_STORAGE -->
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" /> <!-- For drawing over other apps (if needed for timer alerts) -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- Declares that your app uses these hardware features, but does not require them -->
+    <uses-feature
+        android:name="android.hardware.biometrics.face"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.fingerprint"
+        android:required="false" /> <!-- Add this to handle media content URIs -->
+    <!--
+ this way app tell android system that it need this app for following feature without them
+    android system will not allow the app to access anther app
+    -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+
+            <data android:mimeType="image/*" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.PICK" />
+
+            <data android:mimeType="image/*" />
+        </intent>
+    </queries>
 
     <application
         android:allowBackup="true"
@@ -8,22 +49,70 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="FULL SCREEN TIMER"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MonkTemple">
         <activity
-            android:name=".TimerScreen"
-            android:screenOrientation="landscape"
+            android:name=".SeamlessSplashActivity"
+            android:theme="@style/Theme.MonkTemple"
+            android:exported="false"/> >
+
+        <activity
+            android:name=".Statistics"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".PinVerificationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PasswordVerificationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AuthenticationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".setPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".setPinActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SplashScreen"
+            android:theme="@style/Theme.MonkTemple.Splash"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".forgot_pass"
+            android:exported="false" />
+        <activity
+            android:name=".LauncherActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Loginscreen"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".signUpActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".NotificationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Timer"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TimerScreen"
+            android:exported="false"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.MonkTemple" />
     </application>
 
 </manifest>

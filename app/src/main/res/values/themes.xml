@@ -1,9 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.MonkTemple" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <style name="Base.Theme.MonkTemple" parent="Theme.Material3.DayNight">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <!-- For Android 11 and below -->
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:statusBarColor">@color/splash_background</item>
+        <item name="android:navigationBarColor">@color/splash_background</item>
     </style>
 
     <style name="Theme.MonkTemple" parent="Base.Theme.MonkTemple" />
+
+    <style name="ZenTimePicker" parent="ThemeOverlay.AppCompat.Dark">
+        <!-- This makes the text color of the numbers white -->
+        <item name="android:textColorPrimary">@android:color/white</item>
+
+        <!-- This makes the am/pm text color white -->
+        <item name="android:textColorSecondary">@android:color/white</item>
+
+        <!-- This will tint the horizontal dividers between numbers -->
+        <item name="colorControlNormal">#80FFFFFF</item> <!-- 50% transparent white -->
+
+        <!-- This removes the background of the TimePicker itself -->
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="TimePickerTheme" parent="ThemeOverlay.MaterialComponents.TimePicker">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="NavDrawerText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="Theme.MonkTemple.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.MonkTemple.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.MonkTemple.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!-- Reset Password theme -->
+    <style name="ShapeAppearanceOverlay.App.CornerSize50Percent" parent="">
+        <item name="cornerSize">50%</item>
+    </style>
+    <!-- Splash Screen Theme (Works for all Android versions) -->
+    <style name="Theme.MonkTemple.Splash" parent="Theme.SplashScreen">
+        <!-- For Android 12+ -->
+        <item name="windowSplashScreenBackground">@color/splash_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/helloicon</item>
+        <item name="postSplashScreenTheme">@style/Theme.MonkTemple</item>
+
+        <!-- For Android 11 and below -->
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+
 </resources>

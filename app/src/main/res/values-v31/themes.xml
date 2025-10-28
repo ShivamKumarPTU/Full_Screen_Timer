@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Base.Theme.MonkTemple" parent="Theme.Material3.DayNight">
+        <!-- Android 12+ Splash Screen API -->
+        <item name="android:windowSplashScreenBackground">@color/splash_background</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/helloicon</item>
+        <item name="android:windowSplashScreenAnimationDuration">300</item>
+        <item name="android:windowSplashScreenBrandingImage">@null</item>
+
+        <!-- Make it seamless -->
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:statusBarColor">@color/splash_background</item>
+        <item name="android:navigationBarColor">@color/splash_background</item>
+
+        <!-- Regular theme items -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+    </style>
+</resources>

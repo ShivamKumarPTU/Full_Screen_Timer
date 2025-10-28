@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+            <item
+                android:id="@+id/nav_authentication"
+                android:icon="@drawable/user_authentication_svgrepo_com"
+                android:title="Authentication" >
+    <menu>
+        <item
+            android:id="@+id/nav_fingerprint"
+            android:icon="@drawable/fingerprint_alt_svgrepo_com"
+            android:title="Fingerprint" />
+
+        <item
+            android:id="@+id/nav_pin"
+            android:icon="@drawable/password_lock_solid_svgrepo_com"
+            android:title="PIN Security" />
+        <item
+            android:id="@+id/nav_password"
+            android:icon="@drawable/password_svgrepo_com"
+            android:title="Password" />
+
+    </menu>
+        </item>
+
+    <item android:title="Account">
+        <menu>
+
+            <item
+                android:id="@+id/nav_signout"
+                android:icon="@drawable/sign_out_svgrepo_com"
+                android:title="Sign Out" />
+        </menu>
+    </item>
+<item android:title="Statistics">
+    <menu>
+        <item
+            android:id="@+id/nav_statistics"
+            android:icon="@drawable/chart_dashboard"
+            android:title="Graph" />
+    </menu>
+</item>
+</menu>
