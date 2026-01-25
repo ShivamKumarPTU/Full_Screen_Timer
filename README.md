@@ -62,7 +62,7 @@ git clone https://github.com/ShivamKumarPTU/Full_Screen_Timer.git
 ```
 Download Apk (version :-v1.1)
 ```bash
-"(https://github.com/ShivamKumarPTU/Full_Screen_Timer/releases/download/v1.1/app-release.apk)"
+https://github.com/ShivamKumarPTU/Full_Screen_Timer/releases/download/v1.1/app-release.apk
 ```
 or 
 [![Download APK](https://img.shields.io/badge/Download-APK-green)](https://github.com/ShivamKumarPTU/Full_Screen_Timer/releases/download/v1.1/app-release.apk)
