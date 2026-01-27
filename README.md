@@ -1,3 +1,9 @@
+<p align="center">
+  <a href="./Screenshots">
+    <img src="./Screenshots/finalThumbnail.png" alt="App Screenshots" width="700"/>
+  </a>
+</p>
+
 # ⏱️ Full Screen Timer  
 ### Focus better with a clean, distraction-free timer  
 
@@ -18,15 +24,45 @@ With **Pause** and **Cancel** controls, you stay in charge of your time — whet
 - ⚡ **Lightweight & Fast** – Focus on time, not on the app.  
 
 ---
+# 📸 App Screenshots
 
-## 📸 Screenshots
-
+<!-- Row 1 (4 images) -->
 <p align="center">
-  <a href="./Screenshots">
-    <img src="./Screenshots/finalThumbnail.png" alt="App Screenshots" width="700"/>
-  </a>
+  <img src="./Screenshots/Authentication-portrait.png" width="23%">
+  <img src="./Screenshots/BiometricAuthentication-right.png" width="23%">
+  <img src="./Screenshots/ForgotPassword-right.png" width="23%">
+  <img src="./Screenshots/LoginScreen-portrait.png" width="23%">
 </p>
 
+<!-- Row 2 (4 images) -->
+<p align="center">
+  <img src="./Screenshots/ResetPasswordOrPin-portrait.png" width="23%">
+  <img src="./Screenshots/SIgnUp-right.png" width="23%">
+  <img src="./Screenshots/SetPIn-portrait.png" width="23%">
+  <img src="./Screenshots/SetPassword-right.png" width="23%">
+</p>
+
+<!-- Row 3 (4 images) -->
+<p align="center">
+  <img src="./Screenshots/SideNav-right.png" width="23%">
+  <img src="./Screenshots/SignOutDialog-portrait.png" width="23%">
+  <img src="./Screenshots/SplashScreen-right.png" width="23%">
+  <img src="./Screenshots/Statistics-right.png" width="23%">
+</p>
+
+<!-- Row 4 (3 images) -->
+<p align="center">
+  <img src="./Screenshots/TimerScreen.kt-left.png" width="30%">
+  <img src="./Screenshots/VerifyPinScreen-left.png" width="30%">
+  <img src="./Screenshots/Screenshot_20250912_232810.png" width="30%">
+</p>
+
+<!-- Row 5 (3 images) -->
+<p align="center">
+  <img src="./Screenshots/Screenshot_20250912_235748.png" width="30%">
+  <img src="./Screenshots/udpated.png" width="30%">
+  <img src="./Screenshots/ChatGPT%20Image%20Sep%2013%2C%202025%2C%2012_18_33%20AM.png" width="30%">
+</p>
 > 👉 Click the image above to view all app screenshots.
 
 ## 🚀 Getting Started  
