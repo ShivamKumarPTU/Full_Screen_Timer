@@ -53,7 +53,7 @@ With **Pause** and **Cancel** controls, you stay in charge of your time — whet
 <!-- Row 4 (3 images) -->
 <p align="center">
   <img src="./Screenshots/Timer.kt-landscape.png" width="30%">
-  <img src="./Screenshots/TimerScreen.kt-landscape.png" width="30%">
+  <img src="./Screenshots/TimerScreen.kt-left.png" width="30%">
   <img src="./Screenshots/VerifyPinScreen-portrait.png" width="30%">
 </p>
 
@@ -61,7 +61,6 @@ With **Pause** and **Cancel** controls, you stay in charge of your time — whet
 <p align="center">
   <img src="./Screenshots/VerifyPasswordScreen-portrait.png" width="30%">
   <img src="./Screenshots/SetPIn-landscape.png" width="30%">
-  <img src="./Screenshots/finalThumbnail.png" width="30%">
 </p>
 
 > 👉 Click the image above to view all app screenshots.
