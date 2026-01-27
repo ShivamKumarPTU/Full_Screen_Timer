@@ -47,7 +47,6 @@ With **Pause** and **Cancel** controls, you stay in charge of your time — whet
   <img src="./Screenshots/SignOutDialog-portrait.png" width="23%">
   <img src="./Screenshots/SplashScreen-landscape.png" width="23%">
   <img src="./Screenshots/Statistics-landscape.png" width="23%">
-   <img src="./Screenshots/Timer.kt-landscape.png" width="30%">
 </p>
 
 <!-- Row 4 (3 images) -->
