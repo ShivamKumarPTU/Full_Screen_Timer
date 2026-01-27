@@ -5,10 +5,6 @@
 # ⏱️ Full Screen Timer  
 ### Focus better with a clean, distraction-free timer  
 
-
-# ⏱️ Full Screen Timer  
-### Focus better with a clean, distraction-free timer  
-
 ---
 
 ## 🌟 Overview  
