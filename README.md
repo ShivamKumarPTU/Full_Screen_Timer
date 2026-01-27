@@ -36,32 +36,28 @@ With **Pause** and **Cancel** controls, you stay in charge of your time — whet
 
 <!-- Row 2 (4 images) -->
 <p align="center">
-  <img src="./Screenshots/ResetPasswordOrPin-portrait.png" width="23%">
   <img src="./Screenshots/SIgnUp-portrait.png" width="23%">
   <img src="./Screenshots/SetPIn-portrait.png" width="23%">
   <img src="./Screenshots/SetPassword-landscape.png" width="23%">
+    <img src="./Screenshots/SideNav-landscape.png" width="23%">
 </p>
 
 <!-- Row 3 (4 images) -->
 <p align="center">
-  <img src="./Screenshots/SideNav-landscape.png" width="23%">
   <img src="./Screenshots/SignOutDialog-portrait.png" width="23%">
   <img src="./Screenshots/SplashScreen-landscape.png" width="23%">
   <img src="./Screenshots/Statistics-landscape.png" width="23%">
+   <img src="./Screenshots/Timer.kt-landscape.png" width="30%">
 </p>
 
 <!-- Row 4 (3 images) -->
 <p align="center">
   <img src="./Screenshots/Timer.kt-landscape.png" width="30%">
   <img src="./Screenshots/TimerScreen.kt-left.png" width="30%">
-  <img src="./Screenshots/VerifyPinScreen-portrait.png" width="30%">
-</p>
-
-<!-- Row 5 (3 images) -->
-<p align="center">
-  <img src="./Screenshots/VerifyPasswordScreen-portrait.png" width="30%">
+ <img src="./Screenshots/VerifyPasswordScreen-portrait.png" width="30%">
   <img src="./Screenshots/SetPIn-landscape.png" width="30%">
 </p>
+
 
 > 👉 Click the image above to view all app screenshots.
 
