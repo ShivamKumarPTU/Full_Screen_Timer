@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="ChatGPT Image Sep 13, 2025, 12_18_33 AM.png" alt="Full Screen Timer Banner" width="800"/>
-</p>
-
 # ⏱️ Full Screen Timer  
 ### Focus better with a clean, distraction-free timer  
 
