@@ -1,5 +1,7 @@
 <p align="center">
-  <img src="ChatGPT Image Sep 13, 2025, 12_18_33 AM.png" alt="Full Screen Timer Banner" width="800"/>
+  <a href="./Screenshots">
+    <img src="./Screenshots/finalThumbnail.png" alt="App Screenshots" width="700"/>
+  </a>
 </p>
 
 # ⏱️ Full Screen Timer  
@@ -22,13 +24,36 @@ With **Pause** and **Cancel** controls, you stay in charge of your time — whet
 - ⚡ **Lightweight & Fast** – Focus on time, not on the app.  
 
 ---
+## 📸 App Screenshots
 
-## 📸 Screenshots
-
+<!-- Row 1: App Entry & Authentication -->
 <p align="center">
-  <a href="./Screenshots">
-    <img src="./Screenshots/finalThumbnail.png" alt="App Screenshots" width="700"/>
-  </a>
+  <img src="./Screenshots/SplashScreen-landscape.png" width="23%">
+  <img src="./Screenshots/Authentication-portrait.png" width="23%">
+  <img src="./Screenshots/LoginScreen-landscape.png" width="23%">
+  <img src="./Screenshots/SIgnUp-portrait.png" width="23%">
+</p>
+
+<!-- Row 2: Authentication Related -->
+<p align="center">
+  <img src="./Screenshots/ForgotPassword-landscape.png" width="23%">
+  <img src="./Screenshots/ResetPasswordOrPin-portrait.png" width="23%">
+  <img src="./Screenshots/SetPassword-landscape.png" width="23%">
+  <img src="./Screenshots/SetPIn-portrait.png" width="23%">
+</p>
+
+<!-- Row 3: App Navigation -->
+<p align="center">
+  <img src="./Screenshots/SideNav-landscape.png" width="23%">
+  <img src="./Screenshots/SignOutDialog-portrait.png" width="23%">
+  <img src="./Screenshots/BiometricAuthentication-landscape.png" width="23%">
+</p>
+
+<!-- Row 4: Core App Screens (LAST as requested) -->
+<p align="center">
+  <img src="./Screenshots/Timer.kt-landscape.png" width="30%">
+  <img src="./Screenshots/TimerScreen.kt-landscape.png" width="30%">
+  <img src="./Screenshots/Statistics-landscape.png" width="30%">
 </p>
 
 > 👉 Click the image above to view all app screenshots.
