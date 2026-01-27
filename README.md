@@ -29,13 +29,13 @@ With **Pause** and **Cancel** controls, you stay in charge of your time — whet
 
 ## 📸 Screenshots
 
-[![View all app screenshots](./screenshots/cover.png)](./screenshots)
+<p align="center">
+  <a href="./screenshots">
+    <img src="./screenshots/cover.png" alt="App Screenshots" width="700"/>
+  </a>
+</p>
 
-> Click the image above to view all app screenshots.
-/screenshots
-screenshots/cover.png
-
----
+> 👉 Click the image above to view all app screenshots.
 
 ## 🚀 Getting Started  
 
