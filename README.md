@@ -30,8 +30,8 @@ With **Pause** and **Cancel** controls, you stay in charge of your time — whet
 ## 📸 Screenshots
 
 <p align="center">
-  <a href="./screenshots">
-    <img src="./screenshots/cover.png" alt="App Screenshots" width="700"/>
+  <a href="./Screenshots">
+    <img src="./Screenshots/finalThumbnail.png" alt="App Screenshots" width="700"/>
   </a>
 </p>
 
