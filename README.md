@@ -27,29 +27,13 @@ With **Pause** and **Cancel** controls, you stay in charge of your time — whet
 
 ---
 
-## 📸 Screenshots  
+## 📸 Screenshots
 
-| Time Picker | Full Screen Timer |
-|-------------|-------------------|
-![Authentication Portrait](./Authentication-portrait.png)
-![Biometric Authentication Right](./BiometricAuthentication-right.png)
-![Forgot Password Right](./ForgotPassword-right.png)
-![Login Screen Portrait](./LoginScreen-portrait.png)
-![Reset Password Or Pin Portrait](./ResetPasswordOrPin-portrait.png)
-![Sign Up Right](./SIgnUp-right.png)
-![Set Pin Portrait](./SetPIn-portrait.png)
-![Set Password Right](./SetPassword-right.png)
-![Side Navigation Right](./SideNav-right.png)
-![Sign Out Dialog Portrait](./SignOutDialog-portrait.png)
-![Splash Screen Right](./SplashScreen-right.png)
-![Statistics Right](./Statistics-right.png)
-![Timer Screen Left](./TimerScreen.kt-left.png)
-![Verify Pin Screen Left](./VerifyPinScreen-left.png)
-![Full Screen Timer](./Screenshot_20250912_232810.png)
-![Timer Stats Screen](./Screenshot_20250912_235748.png)
-![Updated App Preview](./udpated.png)
-![ChatGPT Reference](./ChatGPT%20Image%20Sep%2013%2C%202025%2C%2012_18_33%20AM.png)
+[![View all app screenshots](./screenshots/cover.png)](./screenshots)
 
+> Click the image above to view all app screenshots.
+/screenshots
+screenshots/cover.png
 
 ---
 
