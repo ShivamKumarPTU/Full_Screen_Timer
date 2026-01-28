@@ -1,70 +1,74 @@
-
+# Corrected and stabilized versions
 [versions]
 agp = "8.4.1"
-# Merged and kept the first definition of kotlin
-kotlin = "2.2.21-RC2"
-core-ktx = "1.12.0"
-hilt = "2.48"
-appcompat = "1.6.1"
-activity = "1.8.0"
-material = "1.10.0"
+kotlin = "1.9.23"
+ksp = "1.9.23-1.0.19"
+core-ktx = "1.13.1"
+hilt = "2.51.1"
+hilt-compiler = "1.2.0"
+appcompat = "1.7.0"
+activity = "1.9.0"
+material = "1.12.0"
 constraintlayout = "2.1.4"
-navigation = "2.7.5"
-firebase-bom = "32.7.0"
-play-services-auth = "20.7.0"
-animated-vector-drawable = "1.1.0"
-firebase-sessions = "1.2.2"
-activity-version = "1.8.0"
-ksp = "2.2.21-RC2-2.0.4"
-work-runtime-ktx = "2.8.1"
-androidx-activity = "1.11.0"
-# Versions from the second, duplicate block
+navigation = "2.7.7"
+firebase-bom = "33.1.0"
+firebase-sessions = "1.2.0"
+play-services-auth = "21.2.0"
+room = "2.6.1"
+coroutines = "1.8.1"
+work-runtime-ktx = "2.9.0"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
-# firebaseSessions is a duplicate of firebase-sessions, removed for clarity
+google-services-plugin = "4.4.2"
 
 [libraries]
-# AndroidX - Merged from both sections
+# AndroidX
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 androidx-activity = { group = "androidx.activity", name = "activity-ktx", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "work-runtime-ktx" }
 
 # Navigation
 androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation" }
 androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }
 
-# Firebase - USE BOM. KTX libraries are now main modules without the -ktx suffix.
-# Corrected to use the main modules. The versions will be managed by the BOM.
+# Firebase
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
-# Corrected library names by removing "-ktx"
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database" }
-# Corrected firebase-sessions to not have a hardcoded version, so it can use the BOM if available, or its own version ref.
 firebase-sessions = { group = "com.google.firebase", name = "firebase-sessions", version.ref = "firebase-sessions" }
 
 # Google Services
 google-play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "play-services-auth" }
 
-# Animated Vector Drawable (AndroidX)
-animated-vector-drawable = { group = "androidx.vectordrawable", name = "vectordrawable-animated", version.ref = "animated-vector-drawable" }
+# Hilt
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
+androidx-hilt-work = { group = "androidx.hilt", name = "hilt-work", version.ref = "hilt-compiler" }
+androidx-hilt-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hilt-compiler" }
 
-# WorkManager
-androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "work-runtime-ktx" }
+# Room
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 
-# Testing - Merged from both sections
+# Coroutines
+coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+coroutines-play-services = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-play-services", version.ref = "coroutines" }
+
+# Testing
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
-# The 'activity' library was defined twice, this one is the correct one for testing if needed.
-activity-test = { group = "androidx.activity", name = "activity", version.ref = "androidx-activity" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-google-gms-google-services = { id = "com.google.gms.google-services", version = "4.4.4" }
+google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "google-services-plugin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+
