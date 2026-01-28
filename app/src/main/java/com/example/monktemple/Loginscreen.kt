@@ -106,24 +106,39 @@ class Loginscreen : AppCompatActivity() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
+            .requestProfile() // Add this line
             .build()
+
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         googleSignInLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
+            Log.d("GoogleSignIn", "Result code: ${result.resultCode}")
+
             if (result.resultCode == RESULT_OK) {
                 val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
                 try {
                     val account = task.getResult(ApiException::class.java)!!
-                    Log.d("LoginScreen", "firebaseAuthWithGoogle:" + account.id)
+                    Log.d("GoogleSignIn", "Google Sign-In successful: ${account.email}")
                     firebaseAuthWithGoogle(account.idToken!!)
                 } catch (e: ApiException) {
-                    Log.w("LoginScreen", "Google sign in failed", e)
+                    Log.e("GoogleSignIn", "Google sign in failed", e)
                     handleGoogleSignInError(e)
                 }
             } else {
-                Toast.makeText(this, "Google Sign-In was cancelled", Toast.LENGTH_SHORT).show()
+                Log.e("GoogleSignIn", "Google Sign-In was cancelled or failed")
+                // More detailed error handling
+                when (result.resultCode) {
+                    RESULT_CANCELED -> {
+                        ShowToast("Google Sign-In was cancelled")
+                        Log.d("GoogleSignIn", "User cancelled the sign-in flow")
+                    }
+                    else -> {
+                        ShowToast("Google Sign-In failed with code: ${result.resultCode}")
+                        Log.e("GoogleSignIn", "Unknown error code: ${result.resultCode}")
+                    }
+                }
             }
         }
     }
@@ -149,37 +164,64 @@ class Loginscreen : AppCompatActivity() {
     }
 
     private fun showGoogleAccountPicker() {
-        // Method 1: Simple approach - just launch sign-in intent
-        /*
-        val signInIntent = googleSignInClient.signInIntent
-        googleSignInLauncher.launch(signInIntent)
-*/
-        // Method 2: If Method 1 doesn't work, use this (force sign-out first):
+        try {
+            Log.d("GoogleSignIn", "Starting Google Sign-In flow")
 
-        googleSignInClient.signOut().addOnCompleteListener(this) {
-            val signInIntent = googleSignInClient.signInIntent
-            googleSignInLauncher.launch(signInIntent)
+            // Clear any previous sign-in attempts
+            googleSignInClient.signOut().addOnCompleteListener {
+                val signInIntent = googleSignInClient.signInIntent
+                // Add flags to clear the task and start fresh
+                signInIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NO_HISTORY)
+
+                Log.d("GoogleSignIn", "Launching Google Sign-In intent")
+                googleSignInLauncher.launch(signInIntent)
+            }.addOnFailureListener { exception ->
+                Log.e("GoogleSignIn", "Error during sign-out: ${exception.message}")
+                // Even if sign-out fails, try to launch sign-in
+                val signInIntent = googleSignInClient.signInIntent
+                googleSignInLauncher.launch(signInIntent)
+            }
+
+        } catch (e: Exception) {
+            Log.e("GoogleSignIn", "Exception starting Google Sign-In: ${e.message}")
+            ShowToast("Error starting Google Sign-In")
         }
-
     }
 
     private fun handleGoogleSignInError(e: ApiException) {
+        Log.e("GoogleSignIn", "Google Sign-In Error: ${e.statusCode} - ${e.message}")
+
         when (e.statusCode) {
             GoogleSignInStatusCodes.SIGN_IN_CANCELLED -> {
-                Toast.makeText(this, "Sign in cancelled", Toast.LENGTH_SHORT).show()
+                ShowToast("Sign in cancelled by user")
+                Log.d("GoogleSignIn", "User explicitly cancelled sign-in")
             }
             GoogleSignInStatusCodes.SIGN_IN_FAILED -> {
-                Toast.makeText(this, "Sign in failed", Toast.LENGTH_SHORT).show()
+                ShowToast("Sign in failed. Please try again.")
+                Log.e("GoogleSignIn", "Sign-in failed: ${e.message}")
             }
             GoogleSignInStatusCodes.SIGN_IN_CURRENTLY_IN_PROGRESS -> {
-                Toast.makeText(this, "Sign in already in progress", Toast.LENGTH_SHORT).show()
+                ShowToast("Sign in already in progress")
+                Log.d("GoogleSignIn", "Sign-in already in progress")
+            }
+            GoogleSignInStatusCodes.NETWORK_ERROR -> {
+                ShowToast("Network error. Check your connection.")
+                Log.e("GoogleSignIn", "Network error during sign-in")
+            }
+            GoogleSignInStatusCodes.INVALID_ACCOUNT -> {
+                ShowToast("Invalid account selected")
+                Log.e("GoogleSignIn", "Invalid account error")
+            }
+            GoogleSignInStatusCodes.DEVELOPER_ERROR -> {
+                ShowToast("App configuration error. Contact support.")
+                Log.e("GoogleSignIn", "Developer error - check configuration")
             }
             else -> {
-                Toast.makeText(this, "Google Sign-In failed: ${e.statusCode}", Toast.LENGTH_SHORT).show()
+                ShowToast("Google Sign-In failed: ${e.statusCode}")
+                Log.e("GoogleSignIn", "Unknown error: ${e.statusCode} - ${e.message}")
             }
         }
     }
-
 
 
     private fun handleEmailPasswordLogin() {
@@ -238,15 +280,15 @@ class Loginscreen : AppCompatActivity() {
         try {
             Log.d("LoginScreen", "=== HANDLING USER LOGIN ===")
 
+            // MARK THIS AS CRITICAL: User is no longer first-time after successful login
+            sessionManager.completeFirstTimeExperience()
+            sessionManager.isLoggedIn = true
+            sessionManager.updateLastLoginTime()
+
             // Check if we're recovering from a sign-out (data should be preserved)
             val preservedUid = sessionManager.getFirebaseUid()
             if (preservedUid != null && preservedUid == firebaseUser.uid) {
                 Log.d("LoginScreen", "🔍 Recovering preserved user data for UID: $preservedUid")
-
-                // Data should already be preserved, just update login state
-                sessionManager.isLoggedIn = true
-                sessionManager.isFirstTime=false
-                sessionManager.updateLastLoginTime()
 
                 // Verify the preserved data
                 val userName = sessionManager.getUserName() ?: firebaseUser.displayName ?: "User"

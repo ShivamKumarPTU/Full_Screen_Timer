@@ -262,4 +262,8 @@ class FirebaseRemoteDataSource @Inject constructor() {
             Result.failure(e)
         }
     }
+    // ADD THIS METHOD - Get Firestore instance for direct access
+    fun getFirestore(): FirebaseFirestore {
+        return db
+    }
 }

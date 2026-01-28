@@ -68,7 +68,7 @@ class Timer : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListen
     private var lastMinute = -1
 
     // variable declaration for selecting image
-    private lateinit var headerIcon: CircleImageView
+    private lateinit var headerIcon: com.google.android.material.imageview.ShapeableImageView
     private lateinit var headerTitle: TextView
     private lateinit var headerSubTitle: TextView
     private lateinit var editNameIcon: ImageView
@@ -158,6 +158,8 @@ class Timer : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListen
             R.id.nav_signout -> {
                 dialogManager.showSignOutDialog()
             }
+
+
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
@@ -282,7 +284,7 @@ class Timer : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListen
         editNameIcon = headerView.findViewById(R.id.edit_name_icon)
         editNameIcon1 = headerView.findViewById(R.id.edit_name_icon1)
 
-        editNameIcon1.setOnClickListener {
+        headerIcon.setOnClickListener {
             val permissionToRequest = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 android.Manifest.permission.READ_MEDIA_IMAGES
             } else {
@@ -475,6 +477,33 @@ class Timer : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListen
             }
         builder.create().show()
     }
+    // Add this method to Timer class
+    private fun showZeroDistractionDialog() {
+        val isEnabled = sessionManager.isZeroDistractionEnabled
 
+        androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle(if (isEnabled) "Disable Zero-Distraction Mode?" else "Enable Zero-Distraction Mode?")
+            .setMessage(if (isEnabled)
+                "This will allow notifications and app switching during sessions."
+            else
+                "This will block all notifications and prevent app switching for maximum focus.")
+            .setPositiveButton(if (isEnabled) "Disable" else "Enable") { dialog, _ ->
+                sessionManager.isZeroDistractionEnabled = !isEnabled
+                ShowToast(if (isEnabled) "Zero-Distraction Mode Disabled" else "Zero-Distraction Mode Enabled")
+                dialog.dismiss()
+            }
+            .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+            .show()
+    }
+    private fun toggleZeroDistractionMode(menuItem: MenuItem) {
+        val isEnabled = !sessionManager.isZeroDistractionEnabled
+        sessionManager.isZeroDistractionEnabled = isEnabled
+        menuItem.isChecked = isEnabled
+        ShowToast(if (isEnabled) "Zero-Distraction Mode Enabled" else "Zero-Distraction Mode Disabled")
+    }
 
+    private fun showSecuritySettings() {
+        val intent = Intent(this, SecurityActivity::class.java)
+        startActivity(intent)
+    }
 }

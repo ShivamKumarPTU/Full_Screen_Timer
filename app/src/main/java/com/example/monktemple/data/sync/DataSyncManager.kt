@@ -3,10 +3,15 @@ package com.example.monktemple.data.sync
 import android.content.Context
 import android.util.Log
 import androidx.work.*
+import com.example.monktemple.RoomUser.UserClass
 import com.example.monktemple.data.remote.FirebaseRemoteDataSource
+import com.example.monktemple.data.remote.FirestoreSession
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreSettings
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -101,6 +106,56 @@ class DataSyncManager @Inject constructor(
             "ERROR"
         }
     }
+    /*
+    // Enhanced sync with conflict resolution
+    suspend fun syncWithConflictResolution(userId: String): Result<Boolean> {
+        return withContext(Dispatchers.IO) {
+            try {
+                Log.d(TAG, "🔄 Starting multi-device sync with conflict resolution")
+
+                // Get local changes
+                val localSessions = userDataManager.getUnsyncedSessions(userId)
+                val remoteSessions = remoteDataSource.getUserSessionsFromFirestore(userId)
+
+                if (remoteSessions.isSuccess) {
+                    val remoteSessionsList = remoteSessions.getOrNull() ?: emptyList()
+
+                    // Conflict resolution: Use latest timestamp
+                    val mergedSessions = mergeSessions(localSessions, remoteSessionsList)
+
+                    // Update both local and remote
+                    userDataManager.saveSessionsLocally(mergedSessions)
+                    remoteDataSource.saveMultipleSessions(mergedSessions)
+
+                    Log.d(TAG, "✅ Multi-device sync completed: ${mergedSessions.size} sessions")
+                    Result.success(true)
+                } else {
+                    Result.failure(remoteSessions.exceptionOrNull() ?: Exception("Sync failed"))
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "❌ Multi-device sync failed", e)
+                Result.failure(e)
+            }
+        }
+    }
+    */
+
+
+    private fun mergeSessions(local: List<UserClass>, remote: List<FirestoreSession>): List<FirestoreSession> {
+        // Implementation for merging sessions with conflict resolution
+        return emptyList()
+    }
+
+    // Offline mode support
+    fun enableOfflineMode(userId: String) {
+        // Configure Firestore for offline persistence
+        FirebaseFirestore.getInstance().firestoreSettings = FirebaseFirestoreSettings.Builder()
+            .setPersistenceEnabled(true)
+            .build()
+
+        Log.d(TAG, "📱 Offline mode enabled for user: $userId")
+    }
+
 }
 
 class FirestoreSyncWorker(

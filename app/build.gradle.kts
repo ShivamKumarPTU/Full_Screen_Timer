@@ -10,12 +10,10 @@ plugins {
 
 android {
     namespace = "com.example.monktemple"
-    // Using compileSdk 34 as it's a stable choice and matches targetSdk.
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.monktemple"
-        // Choosing minSdk 24 for broader compatibility as intended in your latest changes.
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -24,19 +22,43 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    // Add signing configurations for release build
+    signingConfigs {
+        create("release") {
+            storeFile = file("../monktemple-release.keystore")
+            storePassword = "MitShivam3@"        // ← Change this
+            keyAlias = "monktemple"                    // ← Change this
+            keyPassword = "MitShivam3@"          // ← Change this (or the actual key password)
+        }
+
+    }
+
+    packagingOptions {
+        resources.excludes.add("/META-INF/{AL2.0,LGPL2.1}")
+    }
+
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("release")
+            isDebuggable = false
+        }
+
+        create("staging") {
+            initWith(getByName("release"))
+            isDebuggable = true
+            isMinifyEnabled = false
+            isShrinkResources = false
+            applicationIdSuffix = ".staging"
         }
     }
 
     compileOptions {
-        // Using Java 1.8 as it is the standard for modern Android development.
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -62,9 +84,8 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
 
-    // Firebase - Using the complete and correct block from your latest changes
+    // Firebase
     implementation(platform(libs.firebase.bom))
-    // The following names assume you have corrected your libs.versions.toml to remove "-ktx"
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.database)
@@ -77,22 +98,21 @@ dependencies {
     implementation("nl.joery.timerangepicker:timerangepicker:1.0.0")
 
     // Animated Vector Drawable & Biometrics
-    implementation(libs.animated.vector.drawable)
-    implementation("androidx.biometric:biometric:1.1.0") // Using stable version
+    implementation("androidx.vectordrawable:vectordrawable-animated:1.2.0")
+    implementation("androidx.biometric:biometric:1.2.0-alpha05")
 
     // Circle ImageView & MPAndroidChart
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     // Room Database
-    val room_version = "2.6.1" // Using a known stable version
-    implementation("androidx.room:room-runtime:$room_version")
-    implementation("androidx.room:room-ktx:$room_version")
-    ksp("androidx.room:room-compiler:$room_version")
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.8.0")
+    implementation(libs.coroutines.android)
+    implementation(libs.coroutines.play.services)
 
     // Swipe Refresh Layout
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
@@ -101,12 +121,12 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.1")
 
     // Hilt for Dependency Injection
-    implementation("com.google.dagger:hilt-android:2.51.1") // Using a stable version
-    ksp("com.google.dagger:hilt-compiler:2.51.1")
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
 
     // For Hilt and WorkManager Integration
-    implementation("androidx.hilt:hilt-work:1.2.0")
-    ksp("androidx.hilt:hilt-compiler:1.2.0")
+    implementation(libs.androidx.hilt.work)
+    ksp(libs.androidx.hilt.compiler)
 
     // WorkManager for background tasks
     implementation(libs.androidx.work.runtime.ktx)
@@ -115,4 +135,13 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // AI/ML for insights
+    implementation("org.tensorflow:tensorflow-lite:2.17.0")
+
+    // Encryption
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
+
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("androidx.cardview:cardview:1.0.0")
 }

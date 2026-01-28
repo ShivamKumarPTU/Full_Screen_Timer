@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <style name="Base.Theme.MonkTemple" parent="Theme.Material3.DayNight">
@@ -64,14 +63,37 @@
         <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 
-=======
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.MonkTemple" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <!-- Light Theme -->
+    <style name="Theme.MonkTemple.Light" parent="Theme.Material3.Light">
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorSurface">@color/surface</item>
     </style>
 
-    <style name="Theme.MonkTemple" parent="Base.Theme.MonkTemple" />
->>>>>>> 22c7d16364b6d852c7226ebbefba9be79c3d7201
+    <!-- Dark Theme -->
+    <style name="Theme.MonkTemple.Dark" parent="Theme.Material3.Dark">
+        <item name="colorPrimary">@color/purple_200</item>
+        <item name="colorSurface">@color/amoled_background</item>
+    </style>
+
+    <!-- Amoled Theme -->
+    <style name="Theme.MonkTemple.Amoled" parent="Theme.Material3.Dark">
+        <item name="colorPrimary">@color/purple_200</item>
+        <item name="colorSurface">@color/amoled_background</item>
+        <item name="android:windowBackground">@color/amoled_background</item>
+    </style>
+
+    <!-- Nature Theme -->
+    <style name="Theme.MonkTemple.Nature" parent="Theme.Material3.Light">
+        <item name="colorPrimary">@color/nature_primary</item>
+    </style>
+
+    <!-- Space Theme -->
+    <style name="Theme.MonkTemple.Space" parent="Theme.Material3.Dark">
+        <item name="colorPrimary">@color/space_primary</item>
+    </style>
+
+    <!-- Blue Light Theme -->
+    <style name="Theme.MonkTemple.BlueLight" parent="Theme.Material3.Light">
+        <item name="colorPrimary">@color/space_primary</item>
+    </style>
 </resources>

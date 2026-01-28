@@ -2,7 +2,6 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-<<<<<<< HEAD
     <color name="zen_primary">#4CAF50</color>
     <color name="transparent">#00000000</color>
     <color name="gray_high_01">#212529</color>
@@ -27,8 +26,22 @@
     <color name="splash_background">#FFD54F</color>
     <color name="primary">#FFD54F</color>
     <color name="primary_dark">#FFC107</color>
+    <!-- Primary Colors -->
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
 
+    <!-- App Colors -->
+    <color name="background">#FFF5F5F5</color>
+    <color name="surface">#FFFFFFFF</color>
+    <color name="primaryText">#DE000000</color>
+    <color name="secondaryText">#99000000</color>
+    <color name="divider">#1F000000</color>
 
-=======
->>>>>>> 22c7d16364b6d852c7226ebbefba9be79c3d7201
+    <!-- Theme Specific -->
+    <color name="nature_primary">#FF4CAF50</color>
+    <color name="space_primary">#FF2196F3</color>
+    <color name="amoled_background">#FF000000</color>
 </resources>

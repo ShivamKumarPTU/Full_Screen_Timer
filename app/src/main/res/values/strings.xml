@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">MonkTemple</string>
-<<<<<<< HEAD
     <string name="Splash_Screen_messagae">Your Personal Fitness Companion</string>
     <string name="createNewAccount">Don\'t have an account?</string>
     <string name="default_web_client_id">54268109433-93dr9lnbjta4v7rlftc5ffj6nn3oukbu.apps.googleusercontent.com</string>
@@ -104,6 +103,43 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
-=======
->>>>>>> 22c7d16364b6d852c7226ebbefba9be79c3d7201
+
+    <!-- New Feature Strings -->
+    <string name="insights_title">AI Productivity Insights</string>
+    <string name="community_title">Focus Communities</string>
+    <string name="customization_title">Customization</string>
+
+    <string name="optimal_session">Optimal Session Length</string>
+    <string name="focus_score">Focus Score</string>
+    <string name="weekly_trend">Weekly Trend</string>
+    <string name="peak_hours">Peak Productivity Hours</string>
+    <string name="recommendations">AI Recommendations</string>
+
+    <string name="create_community">Create Community</string>
+    <string name="join_community">Join Community</string>
+    <string name="community_members">%d members</string>
+
+    <string name="theme_selection">Theme</string>
+    <string name="sound_selection">Timer Sound</string>
+    <string name="minimalist_mode">Minimalist Mode</string>
+    <string name="enable_animations">Animations</string>
+    <string name="session_templates">Session Templates</string>
+
+    <!-- Default Texts -->
+    <string name="no_communities">No communities yet. Create or join one to get started!</string>
+    <string name="no_templates">No custom templates. Create one to save your favorite session settings.</string>
+    <string name="loading">Loading…</string>
+    <string name="saving">Saving…</string>
+    <string name="security_title">Security &amp; Privacy</string>
+    <string name="biometric_auth">Biometric Authentication</string>
+    <string name="data_encryption">Data Encryption</string>
+    <string name="privacy_features">Privacy Features</string>
+    <string name="data_management">Data Management</string>
+    <string name="military_grade">Military Grade Security</string>
+    <string name="enhanced_security">Enhanced Security</string>
+    <string name="standard_security">Standard Security</string>
+    <string name="wipe_data">Wipe All Sensitive Data</string>
+    <string name="test_biometric">Test Biometric</string>
+    <string name="no_tracking">No Data Tracking</string>
+    <string name="local_storage">Local-First Storage</string>
 </resources>

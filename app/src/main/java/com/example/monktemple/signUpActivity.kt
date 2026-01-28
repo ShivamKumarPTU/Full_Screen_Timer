@@ -164,6 +164,9 @@ class signUpActivity : AppCompatActivity() {
     }
 
     private fun handleSuccessfulSignUp(firebaseUser: FirebaseUser) {
+        // MARK THIS AS CRITICAL: User is no longer first-time
+        sessionManager.completeFirstTimeExperience()
+
         // Use UserManager to handle login permanently
         userManager.handleUserLogin(firebaseUser)
 
@@ -188,11 +191,13 @@ class signUpActivity : AppCompatActivity() {
                 withContext(Dispatchers.Main) {
                     hideLoading()
                     sessionManager.isLoggedIn = true
-                    sessionManager.isFirstTime=false
                     sessionManager.saveAuthToken(currentUserId)
 
                     sendEmailVerification(firebaseUser)
                     ShowToast("Sign Up Successful")
+
+                    // For first-time signup, go directly to Timer (no auth setup yet)
+                    Log.d("SignUpActivity", "🎉 Signup complete - navigating to Timer")
                     redirectToMainActivity()
                 }
             } catch (e: Exception) {
@@ -205,7 +210,6 @@ class signUpActivity : AppCompatActivity() {
             }
         }
     }
-
     private fun sendEmailVerification(user: FirebaseUser) {
         user.sendEmailVerification()
             .addOnCompleteListener { task ->

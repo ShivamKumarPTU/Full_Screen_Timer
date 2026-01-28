@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "54268109433-93dr9lnbjta4v7rlftc5ffj6nn3oukbu.apps.googleusercontent.com",
+          "client_id": "54268109433-21f3scvrujjdvous49ai371as36bqrsf.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.monktemple",
-            "certificate_hash": "09c8a1e1c83d808fa8487de87b9a8bb35c676696"
+            "certificate_hash": "d5490e06fe139ee8e78193d9281770e5221c8664"
           }
         },
         {

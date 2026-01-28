@@ -19,14 +19,19 @@
 
 
     <!-- Editable Profile Image -->
-    <de.hdodenhof.circleimageview.CircleImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/nav_header_icon"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:padding="4dp"
+        android:scaleType="centerCrop"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
+        app:strokeColor="@color/white"
+        app:strokeWidth="2dp"
         android:contentDescription="@string/app_name"
         android:src="@drawable/_4"
-        app:civ_border_color="@android:color/white"
-        app:civ_border_width="2dp" />
+       />
     <!-- Edit Icon -->
     <ImageView
         android:id="@+id/edit_name_icon1"

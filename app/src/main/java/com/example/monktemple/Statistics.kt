@@ -28,6 +28,7 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.highlight.Highlight
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import java.util.Calendar
@@ -49,6 +50,7 @@ class Statistics : AppCompatActivity() {
     private val grayColor = "#A9A9A9".toColorInt()
     private val chartBarColor = "#95E22A".toColorInt()
 
+    private var currentChartSessions: List<UserClass> =emptyList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -69,6 +71,49 @@ class Statistics : AppCompatActivity() {
         sessionManager = SessionManager(this)
         userManager = UserManager(sessionManager)
 
+
+        // When user click on the bar of the day chart Data related to it show functionality
+        binding.barChart.setOnChartValueSelectedListener(
+            object : com.github.mikephil.charting.listener.OnChartValueSelectedListener {
+                override fun onValueSelected(
+                    e: com.github.mikephil.charting.data.Entry,
+                    h: Highlight
+                ) {
+               if(currentRange!="day")
+                   return
+                    val clickedHour=e.x.toInt()
+                    val sessionInHour = currentChartSessions.filter{
+                        session-> val calendar=Calendar.getInstance()
+                        calendar.timeInMillis=session.completionTimestamp
+                        calendar.get(Calendar.HOUR_OF_DAY)==clickedHour
+                    }
+                    if(sessionInHour.isEmpty()) {
+                        Log.d("ChartClick","No sessions found for hour: $clickedHour")
+                        return
+                    }
+                    val detailsMessage= StringBuilder()
+                    sessionInHour.forEach{ session ->
+                        val duration= formatDuration(session.workDuration)
+                        val timeFormat=java.text.SimpleDateFormat("h:mm a",Locale.getDefault())
+                        val timestamp= timeFormat.format(session.completionTimestamp)
+                        detailsMessage.append(". Duration: $duration\n")
+                        detailsMessage.append(". Timestamp: $timestamp\n")
+                    }
+
+                    androidx.appcompat.app.AlertDialog.Builder(this@Statistics)
+                        .setTitle("Session Details for ${clickedHour}:00")
+                        .setMessage(detailsMessage.toString().trim())
+                        .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
+                        .show()
+                    //
+                    binding.barChart.highlightValue(null)// Deselect the bar after showing the dialog
+                }
+
+                override fun onNothingSelected() {
+                    TODO("Not yet implemented")
+                }
+            }
+        )
         binding.backArrowIcon.setOnClickListener {
             startActivity(Intent(this, Timer::class.java))
             finish()
@@ -98,7 +143,7 @@ class Statistics : AppCompatActivity() {
         loadDataForCurrentRange()
     }
 
-    @SuppressLint("UnspecifiedRegisterReceiverFlag")
+    //@SuppressLint("UnspecifiedRegisterReceiverFlag")
     private fun setupSessionUpdateReceiver() {
         sessionUpdateReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
@@ -110,7 +155,7 @@ class Statistics : AppCompatActivity() {
         }
 
         val filter = IntentFilter("SESSION_UPDATED")
-        registerReceiver(sessionUpdateReceiver, filter)
+        registerReceiver(sessionUpdateReceiver, filter,Context.RECEIVER_NOT_EXPORTED)
     }
 
     override fun onResume() {
@@ -125,7 +170,11 @@ class Statistics : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        unregisterReceiver(sessionUpdateReceiver)
+        try {
+            unregisterReceiver(sessionUpdateReceiver)
+        } catch (e: Exception) {
+            Log.e("Statistics", "Error unregistering receiver", e)
+        }
     }
 
     private fun loadDataForCurrentRange() {
@@ -163,32 +212,51 @@ class Statistics : AppCompatActivity() {
                     mUserViewModel.calculateAndSaveStatistics(
                         currentUserId, currentUserId, currentRange, startDate, endDate
                     )
-                    loadDataForCurrentRange()
-                    return@launch
+                    // Don't call loadDataForCurrentRange() recursively, wait for update
                 }
 
                 loadSessionsForChart(currentUserId, startDate, endDate)
 
             } catch (e: Exception) {
                 Log.e("Statistics", "Error loading data", e)
-                binding.swipeRefreshLayout.isRefreshing = false
-                ShowToast("Error loading statistics")
+                runOnUiThread {
+                    binding.swipeRefreshLayout.isRefreshing = false
+                    ShowToast("Error loading statistics")
+                    clearChartAndStats() // Clear on error
+                }
             }
         }
     }
 
     private fun loadSessionsForChart(userId: String, startDate: Long, endDate: Long) {
-        activeSessionsLiveData = mUserViewModel.getSessionsForDateRange(userId, startDate, endDate)
-        activeSessionsLiveData?.observe(this) { sessions ->
-            binding.swipeRefreshLayout.isRefreshing = false
-            Log.d("Statistics", "Chart sessions loaded: ${sessions.size}")
+        try {
+            activeSessionsLiveData?.removeObservers(this@Statistics)
 
-            when (currentRange) {
-                "day" -> updateDayBarChart(sessions)
-                "week" -> updateWeekBarChart(sessions)
+            activeSessionsLiveData = mUserViewModel.getSessionsForDateRange(userId, startDate, endDate)
+            activeSessionsLiveData?.observe(this@Statistics) { sessions ->
+                this.currentChartSessions=sessions
+                runOnUiThread {
+                    binding.swipeRefreshLayout.isRefreshing = false
+                    Log.d("Statistics", "Chart sessions loaded: ${sessions.size}")
+
+                    try {
+                        when (currentRange) {
+                            "day" -> updateDayBarChart(sessions)
+                            "week" -> updateWeekBarChart(sessions)
+                        }
+                        calculateAndDisplayStats(sessions)
+                    } catch (e: Exception) {
+                        Log.e("Statistics", "Error updating chart", e)
+                        clearChartAndStats()
+                    }
+                }
             }
-
-            calculateAndDisplayStats(sessions)
+        } catch (e: Exception) {
+            Log.e("Statistics", "Error loading sessions for chart", e)
+            runOnUiThread {
+                binding.swipeRefreshLayout.isRefreshing = false
+                clearChartAndStats()
+            }
         }
     }
 
@@ -230,42 +298,56 @@ class Statistics : AppCompatActivity() {
     }
 
     private fun updateDayBarChart(sessions: List<UserClass>) {
-        val barChart = binding.barChart
-        val hourlyData = FloatArray(24) { 0f }
-        val calendar = Calendar.getInstance()
-        sessions.forEach { session ->
-            calendar.timeInMillis = session.completionTimestamp
-            val hourOfDay = calendar.get(Calendar.HOUR_OF_DAY)
-            if (hourOfDay in hourlyData.indices) {
-                hourlyData[hourOfDay] += (session.workDuration / (1000f * 60f))
+        try {
+            val barChart = binding.barChart
+            val hourlyData = FloatArray(24) { 0f }
+            val calendar = Calendar.getInstance()
+
+            sessions.forEach { session ->
+                calendar.timeInMillis = session.completionTimestamp
+                val hourOfDay = calendar.get(Calendar.HOUR_OF_DAY)
+                if (hourOfDay in hourlyData.indices) {
+                    hourlyData[hourOfDay] += (session.workDuration / (1000f * 60f))
+                }
             }
+
+            val entries = ArrayList<BarEntry>()
+            hourlyData.forEachIndexed { index, minutes ->
+                entries.add(BarEntry(index.toFloat(), minutes))
+            }
+            val labels = Array(24) { i -> if (i % 4 == 0) "$i:00" else "" }
+            updateChart(barChart, entries, "Time per Hour (min)", labels)
+        } catch (e: Exception) {
+            Log.e("Statistics", "Error in updateDayBarChart", e)
+            clearChartAndStats()
         }
-        val entries = ArrayList<BarEntry>()
-        hourlyData.forEachIndexed { index, minutes ->
-            entries.add(BarEntry(index.toFloat(), minutes))
-        }
-        val labels = Array(24) { i -> if (i % 4 == 0) "$i:00" else "" }
-        updateChart(barChart, entries, "Time per Hour (min)", labels)
     }
 
     private fun updateWeekBarChart(sessions: List<UserClass>) {
-        val barChart = binding.barChart
-        val dailyData = FloatArray(7) { 0f }
-        val calendar = Calendar.getInstance()
-        sessions.forEach { session ->
-            calendar.timeInMillis = session.completionTimestamp
-            val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
-            val dayIndex = if (dayOfWeek == Calendar.SUNDAY) 6 else dayOfWeek - 2
-            if (dayIndex in dailyData.indices) {
-                dailyData[dayIndex] += (session.workDuration / (1000f * 60f))
+        try {
+            val barChart = binding.barChart
+            val dailyData = FloatArray(7) { 0f }
+            val calendar = Calendar.getInstance()
+
+            sessions.forEach { session ->
+                calendar.timeInMillis = session.completionTimestamp
+                val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+                val dayIndex = if (dayOfWeek == Calendar.SUNDAY) 6 else dayOfWeek - 2
+                if (dayIndex in dailyData.indices) {
+                    dailyData[dayIndex] += (session.workDuration / (1000f * 60f))
+                }
             }
+
+            val entries = ArrayList<BarEntry>()
+            val labels = arrayOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+            dailyData.forEachIndexed { index, minutes ->
+                entries.add(BarEntry(index.toFloat(), minutes))
+            }
+            updateChart(barChart, entries, "Time per Day (min)", labels)
+        } catch (e: Exception) {
+            Log.e("Statistics", "Error in updateWeekBarChart", e)
+            clearChartAndStats()
         }
-        val entries = ArrayList<BarEntry>()
-        val labels = arrayOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
-        dailyData.forEachIndexed { index, minutes ->
-            entries.add(BarEntry(index.toFloat(), minutes))
-        }
-        updateChart(barChart, entries, "Time per Day (min)", labels)
     }
 
     private fun updateChart(
@@ -274,48 +356,56 @@ class Statistics : AppCompatActivity() {
         label: String,
         axisLabels: Array<String>
     ) {
-        val barDataSet = BarDataSet(entries, label)
-        barDataSet.color = chartBarColor
-        barDataSet.valueTextColor = Color.WHITE
-        barDataSet.setDrawValues(false)
+        try {
+            val barDataSet = BarDataSet(entries, label)
+            barDataSet.color = chartBarColor
+            barDataSet.valueTextColor = Color.WHITE
+            barDataSet.setDrawValues(false)
 
-        val barData = BarData(barDataSet)
-        barChart.data = barData
-        barChart.setFitBars(true)
+            val barData = BarData(barDataSet)
+            barChart.data = barData
+            barChart.setFitBars(true)
 
-        styleChart(barChart, axisLabels)
-        barChart.invalidate()
+            styleChart(barChart, axisLabels)
+            barChart.invalidate()
+        } catch (e: Exception) {
+            Log.e("Statistics", "Error in updateChart", e)
+        }
     }
 
     private fun styleChart(barChart: BarChart, axisLabels: Array<String>) {
-        barChart.description.isEnabled = false
-        barChart.legend.isEnabled = false
-        barChart.setDrawGridBackground(false)
-        barChart.setDrawBorders(false)
-        barChart.setTouchEnabled(false)
-        barChart.animateY(800)
+        try {
+            barChart.description.isEnabled = false
+            barChart.legend.isEnabled = false
+            barChart.setDrawGridBackground(false)
+            barChart.setDrawBorders(false)
+            barChart.setTouchEnabled(true)
+            barChart.animateY(800)
 
-        val xAxis = barChart.xAxis
-        xAxis.position = XAxis.XAxisPosition.BOTTOM
-        xAxis.setDrawGridLines(false)
-        xAxis.textColor = grayColor
-        xAxis.axisLineColor = grayColor
-        xAxis.granularity = 1f
-        xAxis.valueFormatter = IndexAxisValueFormatter(axisLabels)
+            val xAxis = barChart.xAxis
+            xAxis.position = XAxis.XAxisPosition.BOTTOM
+            xAxis.setDrawGridLines(false)
+            xAxis.textColor = grayColor
+            xAxis.axisLineColor = grayColor
+            xAxis.granularity = 1f
+            xAxis.valueFormatter = IndexAxisValueFormatter(axisLabels)
 
-        val yAxis = barChart.axisLeft
-        yAxis.textColor = grayColor
-        yAxis.axisLineColor = grayColor
-        yAxis.gridColor = grayColor
-        yAxis.setDrawGridLines(true)
-        yAxis.axisMinimum = 0f
+            val yAxis = barChart.axisLeft
+            yAxis.textColor = grayColor
+            yAxis.axisLineColor = grayColor
+            yAxis.gridColor = grayColor
+            yAxis.setDrawGridLines(true)
+            yAxis.axisMinimum = 0f
 
-        val data = barChart.data
-        val maxValue = data?.yMax ?: 180f
-        yAxis.axisMaximum = if (maxValue > 10f) maxValue * 1.2f else 30f
-        yAxis.granularity = if (maxValue > 120f) 60f else 30f
+            val data = barChart.data
+            val maxValue = data?.yMax ?: 180f
+            yAxis.axisMaximum = if (maxValue > 10f) maxValue * 1.2f else 30f
+            yAxis.granularity = if (maxValue > 120f) 60f else 30f
 
-        barChart.axisRight.isEnabled = false
+            barChart.axisRight.isEnabled = false
+        } catch (e: Exception) {
+            Log.e("Statistics", "Error in styleChart", e)
+        }
     }
 
     private fun updateButtonSelection(selectedButton: Button) {
@@ -325,64 +415,86 @@ class Statistics : AppCompatActivity() {
     }
 
     private fun calculateAndDisplayStats(sessions: List<UserClass>) {
-        val totalAttempts = sessions.size
-        val completedSessions = sessions.filter { it.status == "COMPLETED" }
+        try {
+            val totalAttempts = sessions.size
+            val completedSessions = sessions.filter { it.status == "COMPLETED" }
 
-        val totalFocusMillis = completedSessions.sumOf { it.workDuration }
-        val averageSessionMillis =
-            if (completedSessions.isNotEmpty()) totalFocusMillis / completedSessions.size else 0L
+            val totalFocusMillis = completedSessions.sumOf { it.workDuration }
+            val averageSessionMillis =
+                if (completedSessions.isNotEmpty()) totalFocusMillis / completedSessions.size else 0L
 
-        binding.noOfSession.text = completedSessions.size.toString()
-        binding.focusTIme.text = formatDuration(totalFocusMillis)
-        binding.sessionTime.text = formatDuration(averageSessionMillis)
+            binding.noOfSession.text = completedSessions.size.toString()
+            binding.focusTIme.text = formatDuration(totalFocusMillis)
+            binding.sessionTime.text = formatDuration(averageSessionMillis)
 
-        val longestSession = completedSessions.maxByOrNull { it.workDuration }
-        binding.longestSessionValue.text =
-            longestSession?.let { formatDuration(it.workDuration) } ?: "0m"
+            val longestSession = completedSessions.maxByOrNull { it.workDuration }
+            binding.longestSessionValue.text =
+                longestSession?.let { formatDuration(it.workDuration) } ?: "0m"
 
-        val completionRate = if (totalAttempts > 0) {
-            (completedSessions.size.toDouble() / totalAttempts.toDouble() * 100)
-        } else {
-            0.0
+            val completionRate = if (totalAttempts > 0) {
+                (completedSessions.size.toDouble() / totalAttempts.toDouble() * 100)
+            } else {
+                0.0
+            }
+            binding.completionRateValue.text =
+                String.format(Locale.US, "%.0f%%", completionRate)
+
+            binding.mostProductiveTime.text = calculateMostProductiveDay(completedSessions)
+        } catch (e: Exception) {
+            Log.e("Statistics", "Error in calculateAndDisplayStats", e)
         }
-        binding.completionRateValue.text =
-            String.format(Locale.US, "%.0f%%", completionRate)
-
-        binding.mostProductiveTime.text = calculateMostProductiveDay(completedSessions)
     }
 
     private fun displayStatistics(statistics: com.example.monktemple.RoomUser.NewStatistics) {
-        binding.noOfSession.text = statistics.noOfSessions.toString()
-        binding.focusTIme.text = formatDuration(statistics.focusTime)
-        binding.sessionTime.text = formatDuration(statistics.averageSessionTime)
-        binding.longestSessionValue.text = formatDuration(statistics.longestSession)
-        binding.completionRateValue.text = String.format(Locale.US, "%.0f%%", statistics.completionRate)
-        binding.mostProductiveTime.text = statistics.mostProductiveDay
+        try {
+            binding.noOfSession.text = statistics.noOfSessions.toString()
+            binding.focusTIme.text = formatDuration(statistics.focusTime)
+            binding.sessionTime.text = formatDuration(statistics.averageSessionTime)
+            binding.longestSessionValue.text = formatDuration(statistics.longestSession)
+            binding.completionRateValue.text = String.format(Locale.US, "%.0f%%", statistics.completionRate)
+            binding.mostProductiveTime.text = statistics.mostProductiveDay
+        } catch (e: Exception) {
+            Log.e("Statistics", "Error in displayStatistics", e)
+        }
     }
 
     private fun calculateMostProductiveDay(sessions: List<UserClass>): String {
-        if (sessions.isEmpty()) return "N/A"
-        val days = arrayOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
-        return sessions
-            .groupBy {
-                val calendar = Calendar.getInstance()
-                calendar.timeInMillis = it.completionTimestamp
-                days[calendar.get(Calendar.DAY_OF_WEEK) - 1]
-            }
-            .mapValues { entry -> entry.value.sumOf { it.workDuration } }
-            .maxByOrNull { it.value }?.key ?: "N/A"
+        return try {
+            if (sessions.isEmpty()) return "N/A"
+            val days = arrayOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
+            sessions
+                .groupBy {
+                    val calendar = Calendar.getInstance()
+                    calendar.timeInMillis = it.completionTimestamp
+                    days[calendar.get(Calendar.DAY_OF_WEEK) - 1]
+                }
+                .mapValues { entry -> entry.value.sumOf { it.workDuration } }
+                .maxByOrNull { it.value }?.key ?: "N/A"
+        } catch (e: Exception) {
+            Log.e("Statistics", "Error in calculateMostProductiveDay", e)
+            "N/A"
+        }
     }
 
     private fun formatDuration(millis: Long): String {
-        if (millis <= 0) return "0m"
-        val hours = TimeUnit.MILLISECONDS.toHours(millis)
-        val minutes = TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(hours)
-        return if (hours > 0) "${hours}h ${minutes}m" else "${minutes}m"
+        return try {
+            if (millis <= 0) return "0m"
+            val hours = TimeUnit.MILLISECONDS.toHours(millis)
+            val minutes = TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(hours)
+            if (hours > 0) "${hours}h ${minutes}m" else "${minutes}m"
+        } catch (e: Exception) {
+            Log.e("Statistics", "Error in formatDuration", e)
+            "0m"
+        }
     }
 
     private fun clearChartAndStats() {
-        calculateAndDisplayStats(emptyList())
-        binding.barChart.clear()
-        binding.barChart.invalidate()
+        try {
+            calculateAndDisplayStats(emptyList())
+            binding.barChart.clear()
+            binding.barChart.invalidate()
+        } catch (e: Exception) {
+            Log.e("Statistics", "Error in clearChartAndStats", e)
+        }
     }
 }

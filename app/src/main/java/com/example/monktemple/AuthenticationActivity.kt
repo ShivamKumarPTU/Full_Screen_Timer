@@ -69,13 +69,17 @@ class AuthenticationActivity : AppCompatActivity() {
         binding.passwordAuth.visibility = View.GONE
         binding.pinAuth.visibility = View.GONE
 
+        Log.d("AuthActivity", "Checking authentication methods:")
+        Log.d("AuthActivity", "Biometric: ${sessionManager.isBiometricEnabled}")
+        Log.d("AuthActivity", "Password: ${sessionManager.isPasswordEnabled}")
+        Log.d("AuthActivity", "PIN: ${sessionManager.isPinEnabled}")
 
         // Fingerprint
         if (sessionManager.isBiometricEnabled && fingerprintHelper.isFingerprintAvailable()) {
             binding.biometricAuth.visibility = View.VISIBLE
             binding.biometricAuth.setOnClickListener { authenticateWithBiometric() }
             isAnyAuthVisible = true
-            Log.d("AuthActivity", "Biometric enabled and available")
+            Log.d("AuthActivity", "✅ Biometric enabled and available")
         }
 
         // Password
@@ -83,7 +87,7 @@ class AuthenticationActivity : AppCompatActivity() {
             binding.passwordAuth.visibility = View.VISIBLE
             binding.passwordAuth.setOnClickListener { authenticateWithPassword() }
             isAnyAuthVisible = true
-            Log.d("AuthActivity", "Password enabled")
+            Log.d("AuthActivity", "✅ Password enabled")
         }
 
         // PIN
@@ -91,18 +95,17 @@ class AuthenticationActivity : AppCompatActivity() {
             binding.pinAuth.visibility = View.VISIBLE
             binding.pinAuth.setOnClickListener { authenticateWithPin() }
             isAnyAuthVisible = true
-            Log.d("AuthActivity", "PIN enabled")
+            Log.d("AuthActivity", "✅ PIN enabled")
         }
 
         Log.d("AuthActivity", "Any auth visible: $isAnyAuthVisible")
 
         // Safeguard: If no auth methods are enabled/available, proceed directly
         if (!isAnyAuthVisible) {
-            Log.d("AuthActivity", "No auth methods available, proceeding to main app")
+            Log.d("AuthActivity", "❌ No auth methods available, proceeding to main app")
             proceedToMainApp()
         }
     }
-
     private fun authenticateWithBiometric() {
 
         fingerprintHelper.showFingerprintDialog(

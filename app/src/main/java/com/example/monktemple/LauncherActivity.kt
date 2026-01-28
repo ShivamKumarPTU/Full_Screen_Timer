@@ -8,12 +8,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.monktemple.Utlis.SessionManager
-//import com.example.gymsaathi.utils.SessionManager
 import com.google.firebase.auth.FirebaseAuth
 
 class LauncherActivity : AppCompatActivity() {
     private lateinit var sessionManager: SessionManager
     private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -26,51 +26,55 @@ class LauncherActivity : AppCompatActivity() {
         sessionManager = SessionManager(this)
         auth = FirebaseAuth.getInstance()
         checkUserStateAndNavigate()
-
     }
-    private fun checkUserStateAndNavigate(){
 
+    private fun checkUserStateAndNavigate() {
         val currentUser = auth.currentUser
 
         Log.d("LauncherActivity", "=== APP START ===")
         Log.d("LauncherActivity", "isFirstTime: ${sessionManager.isFirstTime}")
+        Log.d("LauncherActivity", "isTrulyFirstTime: ${sessionManager.isTrulyFirstTime()}")
         Log.d("LauncherActivity", "isLoggedIn: ${sessionManager.isLoggedIn}")
-        Log.d("LauncherActivity", "isAuthRequired: ${sessionManager.isAuthRequired}")
-        Log.d("LauncherActivity", "isAnyAuthEnabled: ${sessionManager.isAnyAuthEnabled()}")
+        Log.d("LauncherActivity", "Firebase User: ${currentUser?.uid}")
+        Log.d("LauncherActivity", "Firebase UID in prefs: ${sessionManager.getFirebaseUid()}")
 
         sessionManager.debugPrintAllData()
 
-        when{
-            sessionManager.isFirstTime -> {
-                Log.d("LauncherActivity", "Navigating to SignUp (First time)")
-                // DON'T call resetAllAuthentication here - let it be handled by the setup flow
+        when {
+            // TRUE FIRST-TIME USER: No user data exists at all
+            sessionManager.isTrulyFirstTime() -> {
+                Log.d("LauncherActivity", "🆕 TRUE FIRST-TIME USER - Going to SignUp")
                 startActivity(Intent(this, signUpActivity::class.java))
                 finish()
             }
+
+            // LOGGED-IN USER: Session says logged in AND Firebase user exists
             sessionManager.isLoggedIn && currentUser != null -> {
-                Log.d("LauncherActivity", "User is logged in")
+                Log.d("LauncherActivity", "✅ LOGGED-IN USER - UID: ${currentUser.uid}")
 
-                // CRITICAL: Only check if any auth is enabled, don't check isAuthRequired separately
                 val shouldShowAuth = sessionManager.isAnyAuthEnabled()
-
-                Log.d("LauncherActivity", "Should show authentication: $shouldShowAuth")
-                Log.d("LauncherActivity", "Auth methods enabled: ${sessionManager.isAnyAuthEnabled()}")
+                Log.d("LauncherActivity", "Auth required: $shouldShowAuth")
 
                 if (shouldShowAuth) {
-                    Log.d("LauncherActivity", "Navigating to AuthenticationActivity")
+                    Log.d("LauncherActivity", "🔐 Navigating to AuthenticationActivity")
                     startActivity(Intent(this, AuthenticationActivity::class.java))
                 } else {
-                    Log.d("LauncherActivity", "Navigating directly to Timer")
+                    Log.d("LauncherActivity", "⏰ Navigating directly to Timer")
                     startActivity(Intent(this, Timer::class.java))
                 }
                 finish()
             }
+
+            // SIGNED-OUT RETURNING USER: Has user data but not currently logged in
+            !sessionManager.isLoggedIn && sessionManager.getFirebaseUid() != null -> {
+                Log.d("LauncherActivity", "🔁 RETURNING USER (signed out) - Going to Login")
+                startActivity(Intent(this, Loginscreen::class.java))
+                finish()
+            }
+
+            // DEFAULT: Go to login (shouldn't normally reach here)
             else -> {
-                Log.d("LauncherActivity", "Navigating to Login screen")
-                // Only reset if truly needed
-                if (!sessionManager.isLoggedIn) {
-                    sessionManager.resetAllAuthentication()
-                }
+                Log.d("LauncherActivity", "❓ DEFAULT CASE - Going to Login")
                 startActivity(Intent(this, Loginscreen::class.java))
                 finish()
             }

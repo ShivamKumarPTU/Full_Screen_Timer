@@ -2,12 +2,13 @@ package com.example.monktemple.Utlis
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.os.Bundle
 import android.util.Log
+import androidx.biometric.BiometricManager
 import androidx.core.content.edit
 
 class SessionManager(context: Context) {
     private val prefs: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+    private val appContext: Context = context.applicationContext // Use application context
 
     companion object {
         private const val KEY_PROFILE_IMAGE_URI = "profile_image_uri"
@@ -26,7 +27,17 @@ class SessionManager(context: Context) {
         private const val KEY_IS_PIN_ENABLED = "is_pin_enabled"
         private const val PERSISTENT_USER_ID = "persistent_user_id"
         private const val FIREBASE_UID = "firebase_uid"
+
+        private const val KEY_ZERO_DISTRACTION = "zero_distraction_enabled"
+        private const val KEY_OPTIMAL_SESSION_LENGTH = "optimal_session_length"
+        private const val KEY_PEAK_HOURS = "peak_productivity_hours"
+        private const val KEY_SECURITY_LEVEL = "security_level"
+        private const val KEY_CUSTOM_THEME = "custom_theme"
+        private const val KEY_TIMER_SOUND = "timer_sound"
+
+
     }
+
 
     // Enhanced logout that preserves ALL user data
     fun clearOnlyAuthenticationState() {
@@ -207,4 +218,87 @@ class SessionManager(context: Context) {
             Log.d("SessionManager", "Synced auth status: $isAuthRequired")
         }
     }
+
+    /**
+     * Mark that user has completed first-time experience (signup or first login)
+     */
+    fun completeFirstTimeExperience() {
+        prefs.edit {
+            putBoolean(IS_FIRST_TIME, false)
+        }
+        Log.d("SessionManager", "First time experience completed")
+    }
+
+    /**
+     * Smart check for first time - considers if user data exists
+     */
+    fun isTrulyFirstTime(): Boolean {
+        val hasUserData = getFirebaseUid() != null || getUserId() != null
+        val isFirstTimeFlag = prefs.getBoolean(IS_FIRST_TIME, true)
+
+        // If we have user data but flag says first time, fix the inconsistency
+        if (hasUserData && isFirstTimeFlag) {
+            completeFirstTimeExperience()
+            return false
+        }
+
+        return isFirstTimeFlag && !hasUserData
+    }
+    fun enableBiometricAuth(): Boolean {
+        // 1. Get the BiometricManager from the system service (non-deprecated)
+        val biometricManager = BiometricManager.from(appContext)
+
+        // 2. Check if the device can authenticate
+        val canAuth = biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.BIOMETRIC_WEAK)
+
+        return when (canAuth) {
+            BiometricManager.BIOMETRIC_SUCCESS -> {
+                Log.d("SessionManager", "Biometric authentication can be enabled.")
+                // 3. If successful, update the flag using the property setter
+                isBiometricEnabled = true
+                true // Return true to indicate success
+            }
+            else -> {
+                Log.w("SessionManager", "Biometric authentication not available. Code: $canAuth")
+                // Ensure the flag is disabled if check fails
+                isBiometricEnabled = false
+                false // Return false to indicate failure
+            }
+        }
+    }
+
+
+
+    // Data encryption status
+    fun isDataEncrypted(): Boolean {
+        // Check if sensitive data is properly encrypted
+        return !fetchAuthToken().isNullOrEmpty() &&
+                !getFirebaseUid().isNullOrEmpty() &&
+                prefs.contains(KEY_IS_AUTH_REQUIRED)
+    }
+
+    // Add these properties to SessionManager class
+    var isZeroDistractionEnabled: Boolean
+        get() = prefs.getBoolean(KEY_ZERO_DISTRACTION, false)
+        set(value) = prefs.edit { putBoolean(KEY_ZERO_DISTRACTION, value) }
+
+    var optimalSessionLength: Int
+        get() = prefs.getInt(KEY_OPTIMAL_SESSION_LENGTH, 25)
+        set(value) = prefs.edit { putInt(KEY_OPTIMAL_SESSION_LENGTH, value) }
+
+    var peakProductivityHours: String
+        get() = prefs.getString(KEY_PEAK_HOURS, "9,14,16") ?: "9,14,16"
+        set(value) = prefs.edit { putString(KEY_PEAK_HOURS, value) }
+
+    var securityLevel: String
+        get() = prefs.getString(KEY_SECURITY_LEVEL, "standard") ?: "standard"
+        set(value) = prefs.edit { putString(KEY_SECURITY_LEVEL, value) }
+
+    var customTheme: String
+        get() = prefs.getString(KEY_CUSTOM_THEME, "default") ?: "default"
+        set(value) = prefs.edit { putString(KEY_CUSTOM_THEME, value) }
+
+    var timerSound: String
+        get() = prefs.getString(KEY_TIMER_SOUND, "default") ?: "default"
+        set(value) = prefs.edit { putString(KEY_TIMER_SOUND, value) }
 }

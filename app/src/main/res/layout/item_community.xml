@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/communityName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Focus Masters"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/primaryText" />
+
+        <TextView
+            android:id="@+id/communityDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="A community for deep work and productivity"
+            android:textSize="14sp"
+            android:textColor="@color/secondaryText"
+            android:layout_marginTop="4dp"
+            android:maxLines="2"
+            android:ellipsize="end" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:id="@+id/memberCount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="128 members"
+                android:textSize="12sp"
+                android:textColor="?attr/colorPrimary"
+                android:drawablePadding="4dp"
+                android:drawableStart="@drawable/group_users" />
+
+            <TextView
+                android:id="@+id/focusGoal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Deep Work"
+                android:textSize="12sp"
+                android:textColor="?attr/colorSecondary"
+                android:background="@drawable/tag_background"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
