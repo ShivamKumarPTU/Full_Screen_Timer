@@ -4,8 +4,8 @@
   </a>
 </p>
 
-# ⏱️ Full Screen Timer  
-### Focus better with a clean, distraction-free timer  
+#Demo
+[### Focus better with a clean, distraction-free timer  ](https://github.com/user-attachments/assets/6b703db2-44f1-4fa0-8330-db44dcb05a6d)
 
 ---
 
